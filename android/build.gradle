@@ -1,0 +1,32 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+
+dependencies {
+  // Import the Firebase BoM
+  implementation platform('com.google.firebase:firebase-bom:33.5.1')
+  classpath 'com.google.gms:google-services:4.3.10'
+
+
+  // TODO: Add the dependencies for Firebase products you want to use
+  // When using the BoM, don't specify versions in Firebase dependencies
+  // https://firebase.google.com/docs/android/setup#available-libraries
+}
+
+
+
